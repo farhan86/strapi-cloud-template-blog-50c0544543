@@ -611,6 +611,40 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEarlyMorningCalendarEarlyMorningCalendar
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'early_morning_calendars';
+  info: {
+    singularName: 'early-morning-calendar';
+    pluralName: 'early-morning-calendars';
+    displayName: 'EarlyMorningCalendar';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    calendarID: Schema.Attribute.UID;
+    userID: Schema.Attribute.Integer;
+    serviceID: Schema.Attribute.Integer;
+    month: Schema.Attribute.Integer;
+    date: Schema.Attribute.Date;
+    isDone: Schema.Attribute.Boolean;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::early-morning-calendar.early-morning-calendar'
+    >;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -1047,6 +1081,7 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::early-morning-calendar.early-morning-calendar': ApiEarlyMorningCalendarEarlyMorningCalendar;
       'api::global.global': ApiGlobalGlobal;
       'api::service.service': ApiServiceService;
       'admin::permission': AdminPermission;
